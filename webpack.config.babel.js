@@ -1,7 +1,8 @@
 import path from 'path'
 import webpack from 'webpack'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-const ENV = process.env.NODE_ENV || 'production'
+const ENV = process.env.NODE_ENV || 'development'
 const isProd = ENV === 'production'
 
 export default {
@@ -28,6 +29,8 @@ export default {
     hot: true,
   },
   plugins: [
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(ENV) }),
+    new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'client', 'index.html') }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
